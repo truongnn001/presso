@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self';
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' data:;
+    font-src 'self';
+  ">
+  <title>PressO Desktop</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <span class="logo-icon">◈</span>
+          <span class="logo-text">PressO</span>
+        </div>
+        <div class="version" id="app-version">v0.1.0</div>
+      </div>
+      
+      <nav class="nav-menu">
+        <button class="nav-item active" data-view="dashboard">
+          <span class="nav-icon">⌘</span>
+          <span class="nav-label">Dashboard</span>
+        </button>
+        <button class="nav-item" data-view="documents">
+          <span class="nav-icon">◧</span>
+          <span class="nav-label">Documents</span>
+        </button>
+        <button class="nav-item" data-view="contracts">
+          <span class="nav-icon">◫</span>
+          <span class="nav-label">Contracts</span>
+        </button>
+        <button class="nav-item" data-view="settings">
+          <span class="nav-icon">⚙</span>
+          <span class="nav-label">Settings</span>
+        </button>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="kernel-status" id="kernel-status">
+          <span class="status-dot offline"></span>
+          <span class="status-text">Kernel Offline</span>
+        </div>
+        <div class="kernel-pid" id="kernel-pid"></div>
+      </div>
+    </aside>
+    
+    <!-- Main Content Area -->
+    <main class="content">
+      <!-- Dashboard View -->
+      <section class="view active" id="view-dashboard">
+        <header class="view-header">
+          <h1>Dashboard</h1>
+          <p class="view-subtitle">Command Hub Overview</p>
+        </header>
+        <div class="view-body">
+          <div class="card-grid">
+            <div class="stat-card">
+              <div class="stat-value">—</div>
+              <div class="stat-label">Documents Processed</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">—</div>
+              <div class="stat-label">Active Contracts</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">—</div>
+              <div class="stat-label">Tasks Queued</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">—</div>
+              <div class="stat-label">Engines Running</div>
+            </div>
+          </div>
+          
+          <div class="ipc-test-section">
+            <h3>IPC Round-Trip Test</h3>
+            <p>Test communication between UI, Kernel, and Engines</p>
+            
+            <div class="ipc-test-controls">
+              <button class="btn-primary" id="btn-ping">
+                <span class="btn-icon">⚡</span>
+                Kernel PING
+              </button>
+              <button class="btn-accent" id="btn-python-ping">
+                <span class="btn-icon">🐍</span>
+                Python PING
+              </button>
+              <button class="btn-secondary" id="btn-engine-status">
+                <span class="btn-icon">📊</span>
+                Engine Status
+              </button>
+              <button class="btn-secondary" id="btn-restart-kernel">
+                <span class="btn-icon">↻</span>
+                Restart
+              </button>
+            </div>
+            
+            <div class="ipc-result-box" id="ipc-result">
+              <div class="ipc-result-label">Response:</div>
+              <pre class="ipc-result-content" id="ipc-result-content">No response yet. Click "Send PING" to test.</pre>
+            </div>
+            
+            <div class="ipc-log" id="ipc-log">
+              <div class="ipc-log-header">
+                <span>Message Log</span>
+                <button class="btn-text" id="btn-clear-log">Clear</button>
+              </div>
+              <div class="ipc-log-content" id="ipc-log-content"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Documents View -->
+      <section class="view" id="view-documents">
+        <header class="view-header">
+          <h1>Documents</h1>
+          <p class="view-subtitle">PDF & Image Processing</p>
+        </header>
+        <div class="view-body">
+          <div class="placeholder-section">
+            <div class="placeholder-icon">◧</div>
+            <h3>Document Processing</h3>
+            <p>PDF merge, split, rotate, watermark, and image conversion tools.</p>
+            <p class="placeholder-note">Coming in Phase 2</p>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Contracts View -->
+      <section class="view" id="view-contracts">
+        <header class="view-header">
+          <h1>Contracts</h1>
+          <p class="view-subtitle">Contract Pricing & Management</p>
+        </header>
+        <div class="view-body">
+          <div class="placeholder-section">
+            <div class="placeholder-icon">◫</div>
+            <h3>Contract Management</h3>
+            <p>Contract pricing calculation, VAT computation, and Excel export.</p>
+            <p class="placeholder-note">Coming in Phase 2</p>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Settings View -->
+      <section class="view" id="view-settings">
+        <header class="view-header">
+          <h1>Settings</h1>
+          <p class="view-subtitle">Application Configuration</p>
+        </header>
+        <div class="view-body">
+          <div class="settings-section">
+            <h3>General</h3>
+            <div class="setting-row">
+              <label>Theme</label>
+              <select disabled>
+                <option>Dark</option>
+              </select>
+            </div>
+            <div class="setting-row">
+              <label>Language</label>
+              <select disabled>
+                <option>Vietnamese (vi-VN)</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="settings-section">
+            <h3>System Info</h3>
+            <div class="info-grid" id="system-info">
+              <div class="info-row">
+                <span class="info-label">Platform</span>
+                <span class="info-value" id="info-platform">—</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Electron</span>
+                <span class="info-value" id="info-electron">—</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Node.js</span>
+                <span class="info-value" id="info-node">—</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Kernel Status</span>
+                <span class="info-value" id="info-kernel">Not Connected</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+  
+  <script src="app.js"></script>
+</body>
+</html>
+

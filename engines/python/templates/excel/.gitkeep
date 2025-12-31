@@ -1,0 +1,4 @@
+# Excel templates directory
+# Place .xlsx template files here
+# Templates support {{placeholder}} syntax for dynamic content
+

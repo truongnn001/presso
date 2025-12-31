@@ -1,0 +1,20 @@
+{
+  "name": "presso-desktop",
+  "version": "0.1.0",
+  "description": "PressO Desktop - Work Automation Command Hub",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev"
+  },
+  "author": "PressO Team",
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "electron": "^28.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
+

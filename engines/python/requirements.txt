@@ -1,0 +1,11 @@
+# PressO Python Engine - Dependencies
+# ====================================
+
+# Phase 2: Document Processing
+openpyxl>=3.1.0      # Excel generation
+pypdf>=4.0.0         # PDF processing (merge, split, rotate)
+Pillow>=10.0.0       # Image processing (convert, compress, resize)
+
+# Phase 6 AI Integration (to be added):
+# numpy>=1.24.0
+# tiktoken>=0.5.0

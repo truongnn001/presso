@@ -1,0 +1,69 @@
+[main] INFO com.presso.kernel.KernelMain - PressO Kernel starting (Java 21.0.9+10-LTS)
+[main] INFO com.presso.kernel.KernelMain - Kernel components initialized
+[main] INFO com.presso.kernel.KernelMain - Starting PressO Kernel...
+[main] INFO com.presso.kernel.persistence.DatabaseManager - Connected to SQLite database: C:\Users\truon\AppData\Roaming\PressO\data\presso.db
+[main] INFO com.presso.kernel.persistence.DatabaseManager - Database initialization complete
+[main] INFO com.presso.kernel.KernelMain - Database initialized: C:\Users\truon\AppData\Roaming\PressO\data\presso.db
+[main] INFO com.presso.kernel.lifecycle.LifecycleManager - Kernel startup sequence initiated
+[main] INFO com.presso.kernel.state.StateManager - Loading configuration from C:\Users\truon\AppData\Roaming\PressO\config
+[main] INFO com.presso.kernel.state.StateManager - Configuration loaded successfully
+[main] INFO com.presso.kernel.engine.EngineProcessManager - Starting all engines...
+[main] INFO com.presso.kernel.engine.EngineProcessManager - Starting engine: python
+[engine-python-error] INFO com.presso.kernel.engine.EngineProcessManager - [python] [Python] INFO: Excel handler loaded
+[engine-python-error] INFO com.presso.kernel.engine.EngineProcessManager - [python] [Python] INFO: PDF handler loaded
+[engine-python-error] INFO com.presso.kernel.engine.EngineProcessManager - [python] [Python] INFO: Image handler loaded
+[engine-python-error] INFO com.presso.kernel.engine.EngineProcessManager - [python] [Python] INFO: Template handler loaded
+[engine-python-error] INFO com.presso.kernel.engine.EngineProcessManager - [python] [Python] INFO: ==================================================
+[engine-python-error] INFO com.presso.kernel.engine.EngineProcessManager - [python] [Python] INFO: PressO Python Engine v0.5.0
+[engine-python-error] INFO com.presso.kernel.engine.EngineProcessManager - [python] [Python] INFO: Python 3.13.10 (tags/v3.13.10:4fd8843, Dec  2 2025, 15:08:18) [MSC v.1944 64 bit (AMD64)]
+[engine-python-error] INFO com.presso.kernel.engine.EngineProcessManager - [python] [Python] INFO: Excel support: True
+[engine-python-error] INFO com.presso.kernel.engine.EngineProcessManager - [python] [Python] INFO: PDF support: True
+[engine-python-error] INFO com.presso.kernel.engine.EngineProcessManager - [python] [Python] INFO: Image support: True
+[engine-python-error] INFO com.presso.kernel.engine.EngineProcessManager - [python] [Python] INFO: Template support: True
+[engine-python-reader] INFO com.presso.kernel.engine.EngineProcessManager - [python] Engine is ready
+[engine-python-error] INFO com.presso.kernel.engine.EngineProcessManager - [python] [Python] INFO: ==================================================
+[engine-python-error] INFO com.presso.kernel.engine.EngineProcessManager - [python] [Python] DEBUG: ExcelHandler initialized, template_dir=E:\PressO\engines\python\templates\excel
+[engine-python-error] INFO com.presso.kernel.engine.EngineProcessManager - [python] [Python] DEBUG: PdfHandler initialized, output_dir=C:\Users\truon\AppData\Local\Temp\presso\pdf
+[engine-python-error] INFO com.presso.kernel.engine.EngineProcessManager - [python] [Python] DEBUG: ImageHandler initialized, output_dir=C:\Users\truon\AppData\Local\Temp\presso\image
+[engine-python-error] INFO com.presso.kernel.engine.EngineProcessManager - [python] [Python] DEBUG: Template directory for excel: E:\PressO\engines\python\templates\excel
+[engine-python-error] INFO com.presso.kernel.engine.EngineProcessManager - [python] [Python] DEBUG: Template directory for pdf: E:\PressO\engines\python\templates\pdf
+[engine-python-error] INFO com.presso.kernel.engine.EngineProcessManager - [python] [Python] DEBUG: Template directory for image: E:\PressO\engines\python\templates\image
+[engine-python-error] INFO com.presso.kernel.engine.EngineProcessManager - [python] [Python] INFO: TemplateManager initialized
+[engine-python-error] INFO com.presso.kernel.engine.EngineProcessManager - [python] [Python] INFO: TemplateHandler initialized
+[engine-python-error] INFO com.presso.kernel.engine.EngineProcessManager - [python] [Python] INFO: Python Engine initialized
+[engine-python-error] INFO com.presso.kernel.engine.EngineProcessManager - [python] [Python] INFO: Python Engine starting...
+[engine-python-error] INFO com.presso.kernel.engine.EngineProcessManager - [python] [Python] DEBUG: Sent: {"type": "READY", "engine": "python", "version": "0.5.0", "capabilities": ["PING", "SHUTDOWN", "HEALTH_CHECK", "GET_STATUS", "EXPORT_EXCEL", "PDF_MERGE", "PDF_SPLIT", "PDF_ROTATE", "IMAGE_CONVERT", "IMAGE_COMPRESS", "IMAGE_RESIZE", "LIST_TEMPLATES", "LOAD_TEMPLATE", "GET_TEMPLATE_PATH"], "timestamp": 1767168878113}
+[engine-python-error] INFO com.presso.kernel.engine.EngineProcessManager - [python] [Python] INFO: READY signal sent, capabilities: ['PING', 'SHUTDOWN', 'HEALTH_CHECK', 'GET_STATUS', 'EXPORT_EXCEL', 'PDF_MERGE', 'PDF_SPLIT', 'PDF_ROTATE', 'IMAGE_CONVERT', 'IMAGE_COMPRESS', 'IMAGE_RESIZE', 'LIST_TEMPLATES', 'LOAD_TEMPLATE', 'GET_TEMPLATE_PATH']
+[main] INFO com.presso.kernel.engine.EngineProcessManager - Engine python started and ready (PID: 33576)
+[main] INFO com.presso.kernel.engine.EngineProcessManager - Starting engine: go
+[engine-go-error] INFO com.presso.kernel.engine.EngineProcessManager - [go] 2025/12/31 15:14:38 Loaded default mock credentials for testing
+[engine-go-reader] INFO com.presso.kernel.engine.EngineProcessManager - [go] Engine is ready
+[engine-go-error] INFO com.presso.kernel.engine.EngineProcessManager - [go] [Go API Hub] 2025/12/31 15:14:38 main.go:139: ==================================================
+[engine-go-error] INFO com.presso.kernel.engine.EngineProcessManager - [go] [Go API Hub] 2025/12/31 15:14:38 main.go:140: PressO Go API Hub Engine v0.1.0
+[engine-go-error] INFO com.presso.kernel.engine.EngineProcessManager - [go] [Go API Hub] 2025/12/31 15:14:38 main.go:141: ==================================================
+[engine-go-error] INFO com.presso.kernel.engine.EngineProcessManager - [go] [Go API Hub] 2025/12/31 15:14:38 main.go:560: Sent: {"capabilities":["PING","SHUTDOWN","HEALTH_CHECK","GET_STATUS","EXTERNAL_API_CALL","LIST_PROVIDERS","GET_PROVIDER_INFO"],"engine":"go","timestamp":1767168878256,"type":"READY","version":"0.1.0"}
+[engine-go-error] INFO com.presso.kernel.engine.EngineProcessManager - [go] [Go API Hub] 2025/12/31 15:14:38 main.go:525: READY signal sent, capabilities: [PING SHUTDOWN HEALTH_CHECK GET_STATUS EXTERNAL_API_CALL LIST_PROVIDERS GET_PROVIDER_INFO]
+[main] INFO com.presso.kernel.engine.EngineProcessManager - Engine go started and ready (PID: 38452)
+[main] INFO com.presso.kernel.engine.EngineProcessManager - Engine startup complete, 2 engines running
+[main] INFO com.presso.kernel.scheduling.TaskScheduler - TaskScheduler started
+[main] INFO com.presso.kernel.lifecycle.LifecycleManager - Kernel startup complete, state=RUNNING
+[main] INFO com.presso.kernel.KernelMain - Kernel ready, entering main loop
+[main] INFO com.presso.kernel.KernelMain - IPC channel closed, initiating shutdown
+[main] INFO com.presso.kernel.lifecycle.LifecycleManager - Kernel shutdown sequence initiated
+[main] ERROR com.presso.kernel.persistence.ActivityLogService - Failed to record activity: action=SYSTEM_SHUTDOWN, error=Database not initialized or connection closed
+[main] INFO com.presso.kernel.scheduling.TaskScheduler - TaskScheduler stopped, 0 tasks remaining in queue
+[main] INFO com.presso.kernel.engine.EngineProcessManager - Stopping all engines...
+[main] INFO com.presso.kernel.engine.EngineProcessManager - Stopping engine: python
+[engine-python-error] INFO com.presso.kernel.engine.EngineProcessManager - [python] [Python] DEBUG: Received: {"id":"shutdown_1767168878326","type":"SHUTDOWN"}
+[main] INFO com.presso.kernel.engine.EngineProcessManager - Engine python stopped
+[main] INFO com.presso.kernel.engine.EngineProcessManager - Stopping engine: go
+[engine-go-error] INFO com.presso.kernel.engine.EngineProcessManager - [go] [Go API Hub] 2025/12/31 15:14:38 main.go:193: Received: {"id":"shutdown_1767168878361","type":"SHUTDOWN"}
+[main] WARN com.presso.kernel.engine.EngineProcessManager - Engine go did not terminate gracefully, forcing
+[main] INFO com.presso.kernel.engine.EngineProcessManager - Engine go stopped
+[main] INFO com.presso.kernel.engine.EngineProcessManager - All engines stopped
+[main] INFO com.presso.kernel.state.StateManager - Saving configuration to C:\Users\truon\AppData\Roaming\PressO\config
+[main] INFO com.presso.kernel.state.StateManager - Configuration saved successfully
+[main] INFO com.presso.kernel.lifecycle.LifecycleManager - Kernel shutdown complete, state=TERMINATED
+[main] INFO com.presso.kernel.persistence.DatabaseManager - Database connection closed
+[main] INFO com.presso.kernel.KernelMain - Database closed
+[main] INFO com.presso.kernel.KernelMain - Kernel shutdown complete

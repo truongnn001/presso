@@ -1,0 +1,1 @@
+{"id":"KERNEL_READY","success":true,"timestamp":1767168878318,"result":{"java":"21.0.9+10-LTS","version":"0.1.0","status":"ready"}}

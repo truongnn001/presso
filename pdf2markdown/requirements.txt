@@ -1,0 +1,10 @@
+pymupdf>=1.23.0
+pdfplumber>=0.10.0
+regex>=2023.10.3
+langdetect>=1.0.9
+tqdm>=4.66.0
+
+# Python 3.13 compatible - tested with Python 3.13.x
+# Note: Ensure all packages have Python 3.13 wheels available
+# If installation fails, try: pip install --upgrade pip setuptools wheel
+
