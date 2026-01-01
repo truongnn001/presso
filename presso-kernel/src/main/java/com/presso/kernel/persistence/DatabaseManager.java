@@ -240,6 +240,138 @@ public final class DatabaseManager {
             stmt.execute("CREATE INDEX IF NOT EXISTS idx_payment_stages_contract_id ON payment_stages(contract_id)");
             stmt.execute("CREATE INDEX IF NOT EXISTS idx_execution_history_contract_id ON execution_history(contract_id)");
             
+            // Phase 5 Step 1: Workflow execution tables
+            stmt.execute("""
+                CREATE TABLE IF NOT EXISTS workflow_execution (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    execution_id TEXT UNIQUE NOT NULL,
+                    workflow_id TEXT NOT NULL,
+                    workflow_name TEXT NOT NULL,
+                    status TEXT CHECK(status IN ('running', 'completed', 'failed', 'paused', 'paused_waiting_for_approval')) NOT NULL,
+                    initial_context TEXT,
+                    started_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    completed_at DATETIME,
+                    error_message TEXT
+                )
+                """);
+            
+            stmt.execute("""
+                CREATE TABLE IF NOT EXISTS workflow_step_execution (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    execution_id TEXT NOT NULL REFERENCES workflow_execution(execution_id) ON DELETE CASCADE,
+                    step_id TEXT NOT NULL,
+                    step_type TEXT NOT NULL,
+                    status TEXT CHECK(status IN ('running', 'completed', 'failed', 'skipped')) NOT NULL,
+                    retry_count INTEGER DEFAULT 0,
+                    started_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    completed_at DATETIME,
+                    error_message TEXT
+                )
+                """);
+            
+            // Indexes for workflow tables
+            stmt.execute("CREATE INDEX IF NOT EXISTS idx_workflow_execution_id ON workflow_execution(execution_id)");
+            stmt.execute("CREATE INDEX IF NOT EXISTS idx_workflow_execution_status ON workflow_execution(status)");
+            stmt.execute("CREATE INDEX IF NOT EXISTS idx_workflow_step_execution_id ON workflow_step_execution(execution_id)");
+            stmt.execute("CREATE INDEX IF NOT EXISTS idx_workflow_step_execution_step_id ON workflow_step_execution(step_id)");
+            
+            // Phase 5 Step 3: Workflow approval audit trail
+            stmt.execute("""
+                CREATE TABLE IF NOT EXISTS workflow_approval (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    execution_id TEXT NOT NULL REFERENCES workflow_execution(execution_id) ON DELETE CASCADE,
+                    step_id TEXT NOT NULL,
+                    prompt TEXT NOT NULL,
+                    allowed_actions TEXT NOT NULL,
+                    decision TEXT,
+                    actor_id TEXT,
+                    comment TEXT,
+                    requested_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    resolved_at DATETIME
+                )
+                """);
+            
+            stmt.execute("CREATE INDEX IF NOT EXISTS idx_workflow_approval_execution_id ON workflow_approval(execution_id)");
+            stmt.execute("CREATE INDEX IF NOT EXISTS idx_workflow_approval_step_id ON workflow_approval(step_id)");
+            stmt.execute("CREATE INDEX IF NOT EXISTS idx_workflow_approval_pending ON workflow_approval(execution_id, step_id) WHERE decision IS NULL");
+            
+            // ============================================================================
+            // PHASE 6 SCOPE FREEZE — AI AUDIT TABLES
+            // ============================================================================
+            // AI audit tables are FROZEN at Phase 6 completion.
+            // All AI outputs MUST be logged to these tables:
+            // - ai_suggestion_audit (all suggestions)
+            // - ai_guardrail_audit (all policy decisions)
+            // - ai_draft_audit (all drafts)
+            //
+            // Audit records are IMMUTABLE (no updates after creation).
+            // No sensitive data should be logged.
+            //
+            // Any new AI audit requirements require new Phase approval.
+            // Reference: AI_GOVERNANCE_SUMMARY.md
+            // ============================================================================
+            
+            // Phase 6 Step 1 & 2: AI suggestion audit trail
+            stmt.execute("""
+                CREATE TABLE IF NOT EXISTS ai_suggestion_audit (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    suggestion_id TEXT UNIQUE NOT NULL,
+                    type TEXT NOT NULL,
+                    title TEXT NOT NULL,
+                    context TEXT NOT NULL,
+                    confidence REAL NOT NULL,
+                    explanation TEXT,
+                    confidence_details TEXT,
+                    limitations TEXT,
+                    evidence_summary TEXT,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                )
+                """);
+            
+            stmt.execute("CREATE INDEX IF NOT EXISTS idx_ai_suggestion_audit_context ON ai_suggestion_audit(context)");
+            stmt.execute("CREATE INDEX IF NOT EXISTS idx_ai_suggestion_audit_created_at ON ai_suggestion_audit(created_at)");
+            
+            // Phase 6 Step 3: Guardrail policy decision audit trail
+            stmt.execute("""
+                CREATE TABLE IF NOT EXISTS ai_guardrail_audit (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    suggestion_id TEXT NOT NULL,
+                    policy_decision TEXT NOT NULL CHECK(policy_decision IN ('ALLOW', 'FLAG', 'BLOCK')),
+                    policy_reason TEXT NOT NULL,
+                    confidence_score REAL NOT NULL,
+                    execution_id TEXT,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                )
+                """);
+            
+            stmt.execute("CREATE INDEX IF NOT EXISTS idx_ai_guardrail_audit_suggestion_id ON ai_guardrail_audit(suggestion_id)");
+            stmt.execute("CREATE INDEX IF NOT EXISTS idx_ai_guardrail_audit_decision ON ai_guardrail_audit(policy_decision)");
+            stmt.execute("CREATE INDEX IF NOT EXISTS idx_ai_guardrail_audit_execution_id ON ai_guardrail_audit(execution_id)");
+            stmt.execute("CREATE INDEX IF NOT EXISTS idx_ai_guardrail_audit_created_at ON ai_guardrail_audit(created_at)");
+            
+            // Phase 6 Step 4: AI draft generation audit trail
+            stmt.execute("""
+                CREATE TABLE IF NOT EXISTS ai_draft_audit (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    draft_id TEXT UNIQUE NOT NULL,
+                    draft_type TEXT NOT NULL,
+                    content_hash TEXT NOT NULL,
+                    content_json TEXT NOT NULL,
+                    source_context_json TEXT,
+                    rationale TEXT NOT NULL,
+                    confidence REAL NOT NULL,
+                    confidence_details_json TEXT,
+                    limitations_json TEXT,
+                    status TEXT NOT NULL DEFAULT 'DRAFT_ONLY',
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                )
+                """);
+            
+            stmt.execute("CREATE INDEX IF NOT EXISTS idx_ai_draft_audit_draft_id ON ai_draft_audit(draft_id)");
+            stmt.execute("CREATE INDEX IF NOT EXISTS idx_ai_draft_audit_draft_type ON ai_draft_audit(draft_type)");
+            stmt.execute("CREATE INDEX IF NOT EXISTS idx_ai_draft_audit_content_hash ON ai_draft_audit(content_hash)");
+            stmt.execute("CREATE INDEX IF NOT EXISTS idx_ai_draft_audit_created_at ON ai_draft_audit(created_at)");
+            
             connection.commit();
             logger.debug("Database schema created/verified");
             
